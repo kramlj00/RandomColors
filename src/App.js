@@ -1,9 +1,16 @@
+import styled from "styled-components";
+import MainComponent from "./components/MainComponent/MainComponent";
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <Container>
+      <MainComponent />
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  text-align: center;
+`;
