@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import ColorInput from "../ColorInput/ColorInput";
 import ColorList from "../ColorList/ColorList";
 import FetchColor from "../FetchColor/FetchColor";
 import FetchList from "../FetchList/FetchList";
@@ -15,18 +16,27 @@ function MainComponent() {
 
   useEffect(() => {
     const listHandler = () => {
-      if (!list.includes(colorData) && colorData !== "") {
-        FetchList(setList, colorData);
+      console.log(colorData);
+      if (
+        list.filter((e) => e.colorName === colorData).length === 0 &&
+        colorData !== ""
+      ) {
+        console.log(true);
+        FetchList(list, setList, colorData);
       }
     };
 
     listHandler();
-    console.log(list);
-    console.log(colorData);
+    //console.log(colorData);
   }, [colorData]);
 
   const changeColorHandler = () => {
     FetchColor(setColorData);
+  };
+
+  const colorDataHandler = (data) => {
+    //console.log(data);
+    setColorData(data);
   };
 
   return (
@@ -35,6 +45,7 @@ function MainComponent() {
         Click Me!
       </Button>
       <ColorList list={list} currentColor={colorData} setList={setList} />
+      <ColorInput colorDataHandler={colorDataHandler} />
     </Container>
   );
 }

@@ -1,4 +1,5 @@
-const FetchList = (setList, colorData) => {
+const FetchList = (list, setList, colorData) => {
+  console.log(list);
   setList((prevList) => {
     return [
       ...prevList,
