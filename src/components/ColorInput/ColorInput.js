@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 
-function ColorInput({ colorDataHandler }) {
+function ColorInput({ colorDataHandler, buttonTextHandler }) {
   function isHexColor(hex) {
     return (
       typeof hex === "string" && hex.length === 6 && !isNaN(Number("0x" + hex))
     );
   }
 
-  async function handleKeyDown(e) {
+  function handleKeyDown(e) {
     if (e.key === "Enter") {
       //console.log(e.target.value);
       let text = e.target.value;
@@ -21,6 +21,10 @@ function ColorInput({ colorDataHandler }) {
     }
   }
 
+  function handleOnChange(e) {
+    buttonTextHandler(e.target.value);
+  }
+
   return (
     <SearchContainer>
       <SearchInput
@@ -28,6 +32,7 @@ function ColorInput({ colorDataHandler }) {
         placeholder="Enter hex color"
         autoFocus
         onKeyDown={handleKeyDown}
+        onChange={handleOnChange}
       />
       <SearchIconContainer>
         <SearchIcon />

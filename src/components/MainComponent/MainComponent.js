@@ -6,6 +6,7 @@ import FetchColor from "../FetchColor/FetchColor";
 import FetchList from "../FetchList/FetchList";
 
 function MainComponent() {
+  const [buttonText, setButtonText] = useState("Click me!");
   const [colorData, setColorData] = useState("");
   const [list, setList] = useState([
     {
@@ -16,7 +17,6 @@ function MainComponent() {
 
   useEffect(() => {
     const listHandler = () => {
-      console.log(colorData);
       if (
         list.filter((e) => e.colorName === colorData).length === 0 &&
         colorData !== ""
@@ -27,7 +27,6 @@ function MainComponent() {
     };
 
     listHandler();
-    //console.log(colorData);
   }, [colorData]);
 
   const changeColorHandler = () => {
@@ -35,17 +34,23 @@ function MainComponent() {
   };
 
   const colorDataHandler = (data) => {
-    //console.log(data);
     setColorData(data);
+  };
+
+  const buttonTextHandler = (data) => {
+    setButtonText(data);
   };
 
   return (
     <Container>
       <Button onClick={changeColorHandler} style={{ color: `#${colorData}` }}>
-        Click Me!
+        {buttonText}
       </Button>
       <ColorList list={list} currentColor={colorData} setList={setList} />
-      <ColorInput colorDataHandler={colorDataHandler} />
+      <ColorInput
+        colorDataHandler={colorDataHandler}
+        buttonTextHandler={buttonTextHandler}
+      />
     </Container>
   );
 }
