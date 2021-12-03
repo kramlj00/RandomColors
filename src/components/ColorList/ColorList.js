@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-function ColorList({ list }) {
+function ColorList({ list, currentColor }) {
   return (
     <ListContainer>
       <ListItems>
         {list.map((item) =>
           item.colorName ? (
-            <Item key={item.id} itemColor={item.colorName}>
+            <Item
+              key={item.id}
+              itemColor={item.colorName}
+              className={currentColor === item.colorName ? "bolded" : null}
+            >
               {item.colorName}
             </Item>
           ) : null
