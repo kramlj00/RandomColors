@@ -1,22 +1,58 @@
 import React from "react";
 import styled from "styled-components";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-function ColorList({ list, currentColor }) {
+function ColorList({ list, currentColor, setList }) {
+  function handleOnDragEnd(result) {
+    // if we don't drag item outside draggable area
+    if (result.destination) {
+      const items = Array.from(list);
+      // find original index and remove it the array
+      // it returns a new item
+      const [reorderedItem] = items.splice(result.source.index, 1);
+
+      // find destination index and put reorderedItem there
+      items.splice(result.destination.index, 0, reorderedItem);
+
+      setList(items);
+      // console.log(result);
+    }
+  }
+
   return (
     <ListContainer>
-      <ListItems>
-        {list.map((item) =>
-          item.colorName ? (
-            <Item
-              key={item.id}
-              itemColor={item.colorName}
-              className={currentColor === item.colorName ? "bolded" : null}
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="colors">
+          {(provided) => (
+            <ListItems
+              className="colors"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
             >
-              {item.colorName}
-            </Item>
-          ) : null
-        )}
-      </ListItems>
+              {list.map((item, index) =>
+                item.colorName ? (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided) => (
+                      <Item
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        itemColor={item.colorName}
+                        className={
+                          currentColor === item.colorName ? "bolded" : null
+                        }
+                      >
+                        {item.colorName}
+                      </Item>
+                    )}
+                  </Draggable>
+                ) : null
+              )}
+              {provided.placeholder}
+            </ListItems>
+          )}
+        </Droppable>
+      </DragDropContext>
     </ListContainer>
   );
 }

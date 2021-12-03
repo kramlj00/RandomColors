@@ -34,7 +34,7 @@ function MainComponent() {
       <Button onClick={changeColorHandler} style={{ color: `#${colorData}` }}>
         Click Me!
       </Button>
-      <ColorList list={list} currentColor={colorData} />
+      <ColorList list={list} currentColor={colorData} setList={setList} />
     </Container>
   );
 }
